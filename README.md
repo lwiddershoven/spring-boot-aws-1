@@ -2,7 +2,28 @@
 Play with the basics of both AWS and the spring boot integration.
 In particular, the features that allow me to not have passwords in my code.
 
+## Secrets Manager & Parameter Store
 
+The [current pricing](https://aws.amazon.com/secrets-manager/pricing/) is $0.40 per secret, per month.
+So, cheap enough to play with if you remove all the stuff you don't need anymore. Because all that small stuff adds up.
+
+The [AWS Systems Manager Parameter Store](https://aws.amazon.com/systems-manager/pricing/) (search for Parameter Store) pricing
+is 
+- 	$0.05 per 10,000 Parameter Store API interactions
+- 	$0.05 per 10,000 Parameter Store API interactions
+which has the very nice feature that it is free if your test application is not running. 
+
+The definition of a parameter can be found [here](https://docs.aws.amazon.com/systems-manager/latest/userguide/systems-manager-parameter-store.html#what-is-a-parameter)
+ 
+It seems that the Parameter Store can manage SecretString. In that case you get a charge from the Key Management Store, which 
+is $0.03 per 10,000 requests. For 'generate' requests it is more expensive but these should be rare.
+Again, if you don't request keys it is free, so ideal for testing features.
+
+I personally really like the Secret Manager for secrets as the name makes the scope clear, it has secret rotation, it 
+does not really delete secrets until sometime afterward (really useful if something went wrong with your db credentials)
+and you do not have to give IAM permissions to the consumer on the encryption keys, just on the secret.
+It would however be nice if the first 5 secrets were free though :) 
+Let's see if this preliminary opinion still holds after I played with both.
 
 ## Notes
 
@@ -46,3 +67,4 @@ It is the name that ends with **-env**.
 - The default instance type, `t1.micro` is part of the [free tier](https://aws.amazon.com/free/?all-free-tier.sort-by=item.additionalFields.SortRank&all-free-tier.sort-order=asc&all-free-tier.q=EC2&all-free-tier.q_operator=AND)
   but I have had my account for longer, so I changed the instance type to (see Configuration, Capacity management) `t2.nano`. But 
   that fails because I apparently need a VPC. And testing `t2.micro` yields also a failure. t1 it is.
+  
