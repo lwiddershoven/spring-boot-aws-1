@@ -2,6 +2,15 @@
 Play with the basics of both AWS and the spring boot integration.
 In particular, the features that allow me to not have passwords in my code.
 
+## Profiles
+
+The following profiles are supported:
+- dev : for local development; uses a seperate property file `application-dev.properties`
+- github : disables AWS integrations
+
+To set them you can use the maven profiles (`mvn install -Pgithub`); the `dev` profile is default
+when running with maven.
+
 ## Secrets Manager & Parameter Store
 
 The [current pricing](https://aws.amazon.com/secrets-manager/pricing/) is $0.40 per secret, per month.
