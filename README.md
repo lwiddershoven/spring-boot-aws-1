@@ -10,7 +10,7 @@ So, cheap enough to play with if you remove all the stuff you don't need anymore
 The [AWS Systems Manager Parameter Store](https://aws.amazon.com/systems-manager/pricing/) (search for Parameter Store) pricing
 is 
 - 	$0.05 per 10,000 Parameter Store API interactions
-- 	$0.05 per 10,000 Parameter Store API interactions
+- 	$0.05 per 10,000 Parameter Store API interactions 
 which has the very nice feature that it is free if your test application is not running. 
 
 The definition of a parameter can be found [here](https://docs.aws.amazon.com/systems-manager/latest/userguide/systems-manager-parameter-store.html#what-is-a-parameter)
@@ -24,6 +24,21 @@ does not really delete secrets until sometime afterward (really useful if someth
 and you do not have to give IAM permissions to the consumer on the encryption keys, just on the secret.
 It would however be nice if the first 5 secrets were free though :) 
 Let's see if this preliminary opinion still holds after I played with both.
+
+
+## Spring Cloud AWS
+
+There is a Spring module for AWS integration that integrates nicely with the configuration ; it should be able to
+retrieve database credentials and the like from the various AWS services before the application is properly started.
+
+Unfortunately, this module [requires xml configuration](https://docs.spring.io/spring-cloud-aws/docs/current/reference/html/#amazon-sdk-configuration).
+That is very much survivable (I have worked with that in the old days), it is pretty easy to integrate with the 
+Spring lifecycle so I do not currently see the added value of the Spring cloud aws libraries for this project.
+At this time I prefer the  boilerplate AWS java libs (with AWS documentation, Stackoverflow and reddit support).
+
+For that to work, I'm going to base myself on [these Amazon AWS java examples](https://github.com/awsdocs/aws-doc-sdk-examples/tree/master/java/example_code)
+and [appropriate javadocs](https://docs.aws.amazon.com/AWSJavaSDK/latest/javadoc/com/amazonaws/services/simplesystemsmanagement/model/GetParameterRequest.html).
+Yes people. Real developers do read documentation. On occasion at least. You heard it here first.
 
 ## Notes
 
