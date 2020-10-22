@@ -1,9 +1,13 @@
 package nl.leonw.demo.springbootaws1;
 
+
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.SpringApplication;
-import org.springframework.boot.actuate.autoconfigure.security.servlet.ManagementWebSecurityAutoConfiguration;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.boot.autoconfigure.security.servlet.SecurityAutoConfiguration;
+import org.springframework.stereotype.Component;
+
+import javax.annotation.PostConstruct;
 
 @SpringBootApplication
 public class SpringBootAws1Application {
@@ -12,4 +16,17 @@ public class SpringBootAws1Application {
 		SpringApplication.run(SpringBootAws1Application.class, args);
 	}
 
+}
+
+@Slf4j
+@Component
+class Something {
+
+	@Value("${test-string}")
+	private String testString;
+
+	@PostConstruct
+	public void print() {
+		log.info("Value of test-string: " + testString);
+	}
 }
