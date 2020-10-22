@@ -7,6 +7,7 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.env.EnvironmentPostProcessor;
 import org.springframework.core.env.ConfigurableEnvironment;
 import org.springframework.core.env.MapPropertySource;
+import org.springframework.core.env.Profiles;
 
 import java.util.stream.Collectors;
 
@@ -16,8 +17,15 @@ import java.util.stream.Collectors;
  * reformats parameter names to 1) dump the path and 2) conform to Spring convention
  */
 public class SSMParameterStoreEnvironmentPostProcessor implements EnvironmentPostProcessor {
+    public static final String PROFILE_SKIP_AWS_CONNECTIONS = "skip-aws-connections";
+
+
     @Override
     public void postProcessEnvironment(ConfigurableEnvironment environment, SpringApplication application) {
+        if (environment.acceptsProfiles(Profiles.of(PROFILE_SKIP_AWS_CONNECTIONS))) {
+            System.out.println("SSMParameterStoreEnvironmentPostProcessor: Using profile '" + "'. The parameter store will not be contacted.");
+            return;
+        }
         // The logging subsystem has not yet initialized so just write to stdout for now
         System.out.println("Retrieving configuration from the SSM Parameter Store");
 
