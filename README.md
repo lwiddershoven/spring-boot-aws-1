@@ -43,3 +43,6 @@ It is the name that ends with **-env**.
     ...
   ```
   More work, but at least you get info. And yes, your `nginx` logs are here too!
+- The default instance type, `t1.micro` is part of the [free tier](https://aws.amazon.com/free/?all-free-tier.sort-by=item.additionalFields.SortRank&all-free-tier.sort-order=asc&all-free-tier.q=EC2&all-free-tier.q_operator=AND)
+  but I have had my account for longer, so I changed the instance type to (see Configuration, Capacity management) `t2.nano`. But 
+  that fails because I apparently need a VPC. And testing `t2.micro` yields also a failure. t1 it is.
