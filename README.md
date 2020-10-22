@@ -18,3 +18,28 @@ It is the name that ends with **-env**.
   and perhaps manually or automatically [start and stop/terminate and restore](https://aws.amazon.com/premiumsupport/knowledge-center/schedule-elastic-beanstalk-stop-restart/) 
   your environment
 - You can have a [warning send](https://docs.aws.amazon.com/AmazonCloudWatch/latest/monitoring/monitor_estimated_charges_with_cloudwatch.html) when approaching your budget.   
+- Logging issues. If you have [log issues](https://github.com/aws/aws-elastic-beanstalk-cli/issues/37), like the following
+   ```
+  $ eb logs
+  Retrieving logs...
+  ERROR: UnicodeDecodeError - 'utf-8' codec can't decode byte 0xe0 in position 1698: invalid continuation byte
+  $
+   ```
+  you can just do
+  ```
+  $ rm -rf .elasticbeanstalk/logs/
+  $ eb logs -a 
+  Logs were saved to /home/leon/Development/spring-boot-aws-1/.elasticbeanstalk/logs/201022_135014
+  Logs were saved to /home/leon/Development/spring-boot-aws-1/.elasticbeanstalk/logs/201022_135014
+  Updated symlink at /home/leon/Development/spring-boot-aws-1/.elasticbeanstalk/logs/latest
+  $ ls /home/leon/Development/spring-boot-aws-1/.elasticbeanstalk/logs/latest
+  i-0b48809b6f04c2104  i-0ce551befe98d575d
+  $ # I apparently collected 2 instances over time. Just check timestamps in both
+  $ cat .elasticbeanstalk/logs/latest/i-0 <TAB for autocomplete>
+  $ cat .elasticbeanstalk/logs/latest/i-0ce551befe98d575d/var/log/web.stdout.log  # And plenty of other logfiles
+    Oct 21 12:05:21 ip-10-15-237-41 web: 2020-10-21 12:05:21.404:INFO::main: Logging initialized @763ms
+    Oct 21 12:05:21 ip-10-15-237-41 web: 2020-10-21 12:05:21.474:INFO:oejs.Server:main: jetty-9.2.z-SNAPSHOT
+    Oct 21 12:05:21 ip-10-15-237-41 web: 2020-10-21 12:05:21.555:INFO:oejs.ServerConnector:main: Started ServerConnector@5e9c7434{HTTP/1.1}{0.0.0.0:5000}
+    ...
+  ```
+  More work, but at least you get info. And yes, your `nginx` logs are here too!
