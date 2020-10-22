@@ -12,9 +12,9 @@ import javax.annotation.PostConstruct;
 @SpringBootApplication
 public class SpringBootAws1Application {
 
-	public static void main(String[] args) {
-		SpringApplication.run(SpringBootAws1Application.class, args);
-	}
+    public static void main(String[] args) {
+        SpringApplication.run(SpringBootAws1Application.class, args);
+    }
 
 }
 
@@ -22,11 +22,11 @@ public class SpringBootAws1Application {
 @Component
 class Something {
 
-	@Value("${test-string}")
-	private String testString;
+    @Value("${test-string}")
+    private String testString;
 
-	@PostConstruct
-	public void print() {
-		log.info("Value of test-string: " + testString);
-	}
+    @PostConstruct
+    public void print() {
+        log.info("Value of test-string: " + testString);
+    }
 }
