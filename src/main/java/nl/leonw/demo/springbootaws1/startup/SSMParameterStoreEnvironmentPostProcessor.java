@@ -7,6 +7,7 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.env.EnvironmentPostProcessor;
 import org.springframework.core.env.ConfigurableEnvironment;
 import org.springframework.core.env.MapPropertySource;
+import org.springframework.core.env.Profiles;
 
 import java.util.stream.Collectors;
 
@@ -18,6 +19,12 @@ import java.util.stream.Collectors;
 public class SSMParameterStoreEnvironmentPostProcessor implements EnvironmentPostProcessor {
     @Override
     public void postProcessEnvironment(ConfigurableEnvironment environment, SpringApplication application) {
+        if ( environment.acceptsProfiles(Profiles.of(GithubEnvironmentPostProcessor.PROFILE_NAME)) ) {
+            System.out.println("Git profile active. Aborting the SSMParameterStoreEnvironmentPostProcessor");
+            return;
+        }
+
+
         // The logging subsystem has not yet initialized so just write to stdout for now
         System.out.println("Retrieving configuration from the SSM Parameter Store");
 

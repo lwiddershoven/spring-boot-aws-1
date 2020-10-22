@@ -1,1 +1,2 @@
-org.springframework.boot.env.EnvironmentPostProcessor=nl.leonw.demo.springbootaws1.startup.SSMParameterStoreEnvironmentPostProcessor
+org.springframework.boot.env.EnvironmentPostProcessor=nl.leonw.demo.springbootaws1.startup.SSMParameterStoreEnvironmentPostProcessor,\
+nl.leonw.demo.springbootaws1.startup.GithubEnvironmentPostProcessor
