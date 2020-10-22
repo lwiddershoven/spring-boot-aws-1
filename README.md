@@ -40,6 +40,23 @@ For that to work, I'm going to base myself on [these Amazon AWS java examples](h
 and [appropriate javadocs](https://docs.aws.amazon.com/AWSJavaSDK/latest/javadoc/com/amazonaws/services/simplesystemsmanagement/model/GetParameterRequest.html).
 Yes people. Real developers do read documentation. On occasion at least. You heard it here first.
 
+## Authentication
+
+I created an [access key](https://console.aws.amazon.com/iam/home?#/users/boot-aws-beanstalk-account?section=security_credentials) 
+for me locally that has sufficient rights (the same account as the app in AWS).
+
+These credentials are stored in `~/.aws/credentials`:
+```
+[default]
+aws_access_key_id = some access id
+aws_secret_access_key = very secret
+```
+
+You can, if you want, also [use env props or other ways](https://docs.aws.amazon.com/sdk-for-java/v1/developer-guide/setup-credentials.html).
+
+Do not forget to create, and then attach, some policies to your dev account. 
+
+
 ## Notes
 
 - Java, tomcat, spring use as default port 8080. The EB proxy `nginx` expects 5000. Even for a java environment.
